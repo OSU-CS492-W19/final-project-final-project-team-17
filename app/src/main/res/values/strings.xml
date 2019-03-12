@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Star Wars Info</string>
+    <string name="action_home">Home</string>
+    <string name="planets">Planets</string>
+    <string name="species">Species</string>
+    <string name="people">People</string>
+    <string name="setting">Settings</string>
+
 </resources>
