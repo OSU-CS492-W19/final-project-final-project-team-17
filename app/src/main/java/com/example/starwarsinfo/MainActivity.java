@@ -35,6 +35,8 @@ implements NavigationView.OnNavigationItemSelectedListener {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.hamburger);
 
+        getSupportActionBar().setElevation(0);
+
         Button peopleButton = findViewById(R.id.btn_people);
         peopleButton.setOnClickListener(new View.OnClickListener() {
             @Override
