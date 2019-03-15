@@ -14,6 +14,11 @@ import java.util.ArrayList;
 public class StarWarsAdapter extends RecyclerView.Adapter<StarWarsAdapter.StarWarsViewHolder> {
     private ArrayList<String> mSWList;
 
+    public void updateStarWarsResults(StarWarsUtils.StarWarsList[] items){
+        mSWList = items; //arraylist and list not working out
+        notifyDataSetChanged();
+    }
+
     public StarWarsAdapter() {
         mSWList = new ArrayList<String>();
     }

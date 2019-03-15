@@ -1,23 +1,37 @@
 package com.example.starwarsinfo;
 
 import android.content.Intent;
+import android.nfc.Tag;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity
 implements NavigationView.OnNavigationItemSelectedListener {
 
+    private RecyclerView mSearchResultsRV;
     private DrawerLayout mDrawerLayout;
+    private String mSearchBoxET;
+    private ProgressBar mLoadingPB;
+    private TextView mLoadingErrorTV;
+    private StarWarsAdapter mStarWarsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +55,11 @@ implements NavigationView.OnNavigationItemSelectedListener {
         peopleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mSearchBoxET = "https://swapi.co/api/person/1";
+                String searchQuery = mSearchBoxET;
+                if (!TextUtils.isEmpty(searchQuery)) {
+                    doStarWarsSearch(searchQuery);
+                }
             }
         });
 
@@ -99,4 +117,47 @@ implements NavigationView.OnNavigationItemSelectedListener {
                 return false;
         }
     }
+
+    private void doStarWarsSearch(String query){
+        String url = StarWarsUtils.buildStarWarsSearchURL(query);
+        Log.d(TAG, "querying starwars search URL: " + url );
+        new StarWarsSearchTask().execute(url);
+    }
+
+    class StarWarsSearchTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mLoadingPB.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            String url = urls[0];
+            String results = null;
+            try {
+                results = NetworkUtils.doHTTPGet(url);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return results;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (s != null) {
+                mLoadingErrorTV.setVisibility(View.INVISIBLE);
+                mSearchResultsRV.setVisibility(View.VISIBLE);
+                StarWarsUtils.StarWarsList[] items = StarWarsUtils.parseStarWarsResults(s);
+                mStarWarsAdapter.updateStarWarsResults(items);
+            } else {
+                mLoadingErrorTV.setVisibility(View.VISIBLE);
+                mSearchResultsRV.setVisibility(View.INVISIBLE);
+            }
+            mLoadingPB.setVisibility(View.INVISIBLE);
+        }
+
+    }
+
+
 }
