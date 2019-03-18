@@ -22,6 +22,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
 implements NavigationView.OnNavigationItemSelectedListener {
@@ -33,11 +35,16 @@ implements NavigationView.OnNavigationItemSelectedListener {
     private TextView mLoadingErrorTV;
     private StarWarsAdapter mStarWarsAdapter;
 
+    private final String TAG = MainActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mDrawerLayout = findViewById(R.id.drawer_layout);
+
+        mStarWarsAdapter = new StarWarsAdapter();
 
         NavigationView navigationView = findViewById(R.id.nv_nav_drawer);
         navigationView.setNavigationItemSelectedListener(this);
@@ -47,7 +54,7 @@ implements NavigationView.OnNavigationItemSelectedListener {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.hamburger);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_action_hamburger_stack);
 
         getSupportActionBar().setElevation(0);
 
@@ -128,7 +135,7 @@ implements NavigationView.OnNavigationItemSelectedListener {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mLoadingPB.setVisibility(View.VISIBLE);
+            //mLoadingPB.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -146,15 +153,16 @@ implements NavigationView.OnNavigationItemSelectedListener {
         @Override
         protected void onPostExecute(String s) {
             if (s != null) {
-                mLoadingErrorTV.setVisibility(View.INVISIBLE);
-                mSearchResultsRV.setVisibility(View.VISIBLE);
-                StarWarsUtils.StarWarsList[] items = StarWarsUtils.parseStarWarsResults(s);
+                //mLoadingErrorTV.setVisibility(View.INVISIBLE);
+                //mSearchResultsRV.setVisibility(View.VISIBLE);
+                Log.d(TAG, s);
+                ArrayList<StarWarsUtils.StarWarsPerson> items = StarWarsUtils.parseStarWarsResults(s);
                 mStarWarsAdapter.updateStarWarsResults(items);
             } else {
-                mLoadingErrorTV.setVisibility(View.VISIBLE);
-                mSearchResultsRV.setVisibility(View.INVISIBLE);
+                //mLoadingErrorTV.setVisibility(View.VISIBLE);
+                //mSearchResultsRV.setVisibility(View.INVISIBLE);
             }
-            mLoadingPB.setVisibility(View.INVISIBLE);
+            //mLoadingPB.setVisibility(View.INVISIBLE);
         }
 
     }

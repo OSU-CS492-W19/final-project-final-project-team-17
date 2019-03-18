@@ -10,21 +10,21 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class StarWarsAdapter extends RecyclerView.Adapter<StarWarsAdapter.StarWarsViewHolder> {
-    private ArrayList<String> mSWList;
+    private List<StarWarsUtils.StarWarsPerson> mSWList;
 
-    public void updateStarWarsResults(StarWarsUtils.StarWarsList[] items){
+    public void updateStarWarsResults(List<StarWarsUtils.StarWarsPerson> items){
         mSWList = items; //arraylist and list not working out
         notifyDataSetChanged();
     }
 
-    public StarWarsAdapter() {
-        mSWList = new ArrayList<String>();
+    public StarWarsAdapter(){
     }
 
-    public void addSWList(String starwarslist) {
-        mSWList.add(starwarslist);
+    public void addSWList(StarWarsUtils.StarWarsPerson swPerson) {
+        mSWList.add(swPerson);
         notifyDataSetChanged();
     }
 
@@ -43,7 +43,7 @@ public class StarWarsAdapter extends RecyclerView.Adapter<StarWarsAdapter.StarWa
 
     @Override
     public void onBindViewHolder(@NonNull StarWarsViewHolder starWarsViewHolder, int i) {
-        String todo = mSWList.get(mSWList.size() - i - 1);
+        StarWarsUtils.StarWarsPerson todo = mSWList.get(mSWList.size() - i - 1);
         starWarsViewHolder.bind(todo);
     }
 
@@ -55,8 +55,8 @@ public class StarWarsAdapter extends RecyclerView.Adapter<StarWarsAdapter.StarWa
             mStarWarsTV = itemView.findViewById(R.id.tv_starwars_text); // -------------------- HELP
         }
 
-        public void bind(String SWdetail) {
-            mStarWarsTV.setText(SWdetail);
+        public void bind(StarWarsUtils.StarWarsPerson SWdetail) {
+            mStarWarsTV.setText(SWdetail.name);
         }
     }
 }
