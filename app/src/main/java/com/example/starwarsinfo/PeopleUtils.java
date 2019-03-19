@@ -1,13 +1,12 @@
 package com.example.starwarsinfo;
 
 import android.net.Uri;
+
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.List;
 
-
-public class StarWarsUtils {
+public class PeopleUtils {
     final static String STARWARS_SEARCH_BASE_URL = "https://swapi.co/api/";
     final static String STARWARS_SEARCH_QUERY_PARAM = "q";
     final static String STARWARS_SEARCH_TYPE_PARAM = "people";
@@ -20,7 +19,7 @@ public class StarWarsUtils {
         public String mass;
     }
     public static class StarWarsResults {
-        public StarWarsPerson[] results;
+        public PeopleUtils.StarWarsPerson[] results;
 
     }
 
@@ -33,12 +32,12 @@ public class StarWarsUtils {
 
     }
 
-    public static ArrayList<StarWarsPerson> parseStarWarsResults(String json) {
+    public static ArrayList<PeopleUtils.StarWarsPerson> parseStarWarsResults(String json) {
         Gson gson = new Gson();
-        StarWarsResults results = gson.fromJson(json, StarWarsResults.class);
+        PeopleUtils.StarWarsResults results = gson.fromJson(json, PeopleUtils.StarWarsResults.class);
         if (results != null && results.results != null) {
-            ArrayList<StarWarsPerson> newList = new ArrayList<>();
-            for (StarWarsPerson swp: results.results) {
+            ArrayList<PeopleUtils.StarWarsPerson> newList = new ArrayList<>();
+            for (PeopleUtils.StarWarsPerson swp: results.results) {
                 newList.add(swp);
             }
             return newList;

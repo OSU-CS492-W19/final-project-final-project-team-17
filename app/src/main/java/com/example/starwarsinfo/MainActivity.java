@@ -17,7 +17,6 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -33,7 +32,7 @@ implements NavigationView.OnNavigationItemSelectedListener {
     private String mRelocationURLTextString;
     private ProgressBar mLoadingPB;
     private TextView mLoadingErrorTV;
-    private StarWarsAdapter mStarWarsAdapter;
+    private PeopleAdapter mPeopleAdapter;
 
     private final String TAG = MainActivity.class.getSimpleName();
 
@@ -44,7 +43,7 @@ implements NavigationView.OnNavigationItemSelectedListener {
         setContentView(R.layout.activity_main);
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
-        mStarWarsAdapter = new StarWarsAdapter();
+        mPeopleAdapter = new PeopleAdapter();
 
         NavigationView navigationView = findViewById(R.id.nv_nav_drawer);
         navigationView.setNavigationItemSelectedListener(this);
@@ -65,7 +64,7 @@ implements NavigationView.OnNavigationItemSelectedListener {
                 mRelocationURLTextString = "https://swapi.co/api/person/";
                 String searchQuery = mRelocationURLTextString;
                 if (!TextUtils.isEmpty(searchQuery)) {
-                    doStarWarsSearch(searchQuery);
+                    doStarWarsPeople(searchQuery);
                 }
             }
         });
@@ -125,8 +124,8 @@ implements NavigationView.OnNavigationItemSelectedListener {
         }
     }
 
-    private void doStarWarsSearch(String query){
-        String url = StarWarsUtils.buildStarWarsSearchURL(query);
+    private void doStarWarsPeople(String query){
+        String url = PeopleUtils.buildStarWarsSearchURL(query);
         Log.d(TAG, "querying starwars search URL: " + url );
         new StarWarsSearchTask().execute(url);
     }
@@ -156,8 +155,8 @@ implements NavigationView.OnNavigationItemSelectedListener {
                 //mLoadingErrorTV.setVisibility(View.INVISIBLE);
                 //mSearchResultsRV.setVisibility(View.VISIBLE);
                 Log.d(TAG, s);
-                ArrayList<StarWarsUtils.StarWarsPerson> items = StarWarsUtils.parseStarWarsResults(s);
-                mStarWarsAdapter.updateStarWarsResults(items);
+                ArrayList<PeopleUtils.StarWarsPerson> items = PeopleUtils.parseStarWarsResults(s); // SET UP FOR PEOPLE
+                mPeopleAdapter.updatePeopleResults(items);
             } else {
                 //mLoadingErrorTV.setVisibility(View.VISIBLE);
                 //mSearchResultsRV.setVisibility(View.INVISIBLE);

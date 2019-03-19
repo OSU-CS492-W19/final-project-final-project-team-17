@@ -7,24 +7,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.List;
 
-public class StarWarsAdapter extends RecyclerView.Adapter<StarWarsAdapter.StarWarsViewHolder> {
-    private List<StarWarsUtils.StarWarsPerson> mSWList;
+public class PlanetAdapter  extends RecyclerView.Adapter<PlanetAdapter.StarWarsViewHolder>{
+    private List<PlanetUtils.StarWarsPlanet> mSWList;
 
-    public void updateStarWarsResults(List<StarWarsUtils.StarWarsPerson> items){
+    public void updatePlanetResults(List<PlanetUtils.StarWarsPlanet> items){
         mSWList = items; //arraylist and list not working out
         notifyDataSetChanged();
     }
 
-    public StarWarsAdapter(){
+    public PlanetAdapter(){
     }
 
-    public void addSWList(StarWarsUtils.StarWarsPerson swPerson) {
-        mSWList.add(swPerson);
+    public void addSWList(PlanetUtils.StarWarsPlanet swPlanet) {
+        mSWList.add(swPlanet);
         notifyDataSetChanged();
     }
 
@@ -35,15 +32,15 @@ public class StarWarsAdapter extends RecyclerView.Adapter<StarWarsAdapter.StarWa
 
     @NonNull
     @Override
-    public StarWarsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public PlanetAdapter.StarWarsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View itemView = inflater.inflate(R.layout.starwars_list_item, viewGroup, false);
-        return new StarWarsViewHolder(itemView);
+        return new PlanetAdapter.StarWarsViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull StarWarsViewHolder starWarsViewHolder, int i) {
-        StarWarsUtils.StarWarsPerson todo = mSWList.get(mSWList.size() - i - 1);
+    public void onBindViewHolder(@NonNull PlanetAdapter.StarWarsViewHolder starWarsViewHolder, int i) {
+        PlanetUtils.StarWarsPlanet todo = mSWList.get(mSWList.size() - i - 1);
         starWarsViewHolder.bind(todo);
     }
 
@@ -55,10 +52,12 @@ public class StarWarsAdapter extends RecyclerView.Adapter<StarWarsAdapter.StarWa
             mStarWarsTV = itemView.findViewById(R.id.tv_starwars_text); // -------------------- HELP
         }
 
-        public void bind(StarWarsUtils.StarWarsPerson SWdetail) {
+        public void bind(PlanetUtils.StarWarsPlanet SWdetail){
             mStarWarsTV.setText(SWdetail.name);
-            mStarWarsTV.setText(SWdetail.height);
+            mStarWarsTV.setText(SWdetail.gravitiy);
             mStarWarsTV.setText(SWdetail.mass);
+            mStarWarsTV.setText(SWdetail.population);
         }
+
     }
 }
