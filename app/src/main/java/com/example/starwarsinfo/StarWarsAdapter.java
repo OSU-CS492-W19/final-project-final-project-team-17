@@ -57,6 +57,8 @@ public class StarWarsAdapter extends RecyclerView.Adapter<StarWarsAdapter.StarWa
 
         public void bind(StarWarsUtils.StarWarsPerson SWdetail) {
             mStarWarsTV.setText(SWdetail.name);
+            mStarWarsTV.setText(SWdetail.height);
+            mStarWarsTV.setText(SWdetail.mass);
         }
     }
 }

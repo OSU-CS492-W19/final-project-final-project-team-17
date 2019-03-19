@@ -30,7 +30,7 @@ implements NavigationView.OnNavigationItemSelectedListener {
 
     private RecyclerView mSearchResultsRV;
     private DrawerLayout mDrawerLayout;
-    private String mSearchBoxET;
+    private String mRelocationURLTextString;
     private ProgressBar mLoadingPB;
     private TextView mLoadingErrorTV;
     private StarWarsAdapter mStarWarsAdapter;
@@ -62,8 +62,8 @@ implements NavigationView.OnNavigationItemSelectedListener {
         peopleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSearchBoxET = "https://swapi.co/api/person/1";
-                String searchQuery = mSearchBoxET;
+                mRelocationURLTextString = "https://swapi.co/api/person/";
+                String searchQuery = mRelocationURLTextString;
                 if (!TextUtils.isEmpty(searchQuery)) {
                     doStarWarsSearch(searchQuery);
                 }
