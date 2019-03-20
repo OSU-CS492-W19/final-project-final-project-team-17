@@ -10,7 +10,7 @@ public class PeopleUtils {
     final static String STARWARS_SEARCH_BASE_URL = "https://swapi.co/api/";
     final static String STARWARS_SEARCH_QUERY_PARAM = "q";
     final static String STARWARS_SEARCH_TYPE_PARAM = "people";
-    final static String STARWARS_SEARCH_NUMBER_PARAM = "1";
+    final static String STARWARS_SEARCH_PAGE_NUMBER = "1";
     final static String STARWARS_SEARCH_PAGE = "page";
 
     public static class StarWarsPerson {
@@ -26,7 +26,7 @@ public class PeopleUtils {
     public static String buildStarWarsSearchURL(String query){
         return Uri.parse(STARWARS_SEARCH_BASE_URL).buildUpon()
                 .appendPath(STARWARS_SEARCH_TYPE_PARAM)
-                .appendQueryParameter(STARWARS_SEARCH_PAGE, "1")
+                .appendQueryParameter(STARWARS_SEARCH_PAGE, STARWARS_SEARCH_PAGE_NUMBER)
                 .build()
                 .toString();
 

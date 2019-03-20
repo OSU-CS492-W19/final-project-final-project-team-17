@@ -3,12 +3,14 @@ package com.example.starwarsinfo;
 import android.content.Intent;
 import android.nfc.Tag;
 import android.os.AsyncTask;
+import android.provider.Contacts;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -27,23 +29,26 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
 implements NavigationView.OnNavigationItemSelectedListener {
 
-    private RecyclerView mSearchResultsRV;
     private DrawerLayout mDrawerLayout;
     private String mRelocationURLTextString;
     private ProgressBar mLoadingPB;
     private TextView mLoadingErrorTV;
-    private PeopleAdapter mPeopleAdapter;
 
     private final String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mDrawerLayout = findViewById(R.id.drawer_layout);
 
-        mPeopleAdapter = new PeopleAdapter();
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+        //mSearchResultsRV = findViewById(R.id.rv_starwars_list);
+
+        //mPeopleAdapter = new PeopleAdapter();
+
+        //mSearchResultsRV.setAdapter(mPeopleAdapter);
+        //mSearchResultsRV.setLayoutManager(new LinearLayoutManager(this));
+        //mSearchResultsRV.setHasFixedSize(true);
 
         NavigationView navigationView = findViewById(R.id.nv_nav_drawer);
         navigationView.setNavigationItemSelectedListener(this);
@@ -61,11 +66,8 @@ implements NavigationView.OnNavigationItemSelectedListener {
         peopleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRelocationURLTextString = "https://swapi.co/api/person/";
-                String searchQuery = mRelocationURLTextString;
-                if (!TextUtils.isEmpty(searchQuery)) {
-                    doStarWarsPeople(searchQuery);
-                }
+                Intent peopleIntent = new Intent(getApplicationContext(), PeopleActivity.class);
+                startActivity(peopleIntent);
             }
         });
 
@@ -123,48 +125,5 @@ implements NavigationView.OnNavigationItemSelectedListener {
                 return false;
         }
     }
-
-    private void doStarWarsPeople(String query){
-        String url = PeopleUtils.buildStarWarsSearchURL(query);
-        Log.d(TAG, "querying starwars search URL: " + url );
-        new StarWarsSearchTask().execute(url);
-    }
-
-    class StarWarsSearchTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            //mLoadingPB.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        protected String doInBackground(String... urls) {
-            String url = urls[0];
-            String results = null;
-            try {
-                results = NetworkUtils.doHTTPGet(url);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return results;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            if (s != null) {
-                //mLoadingErrorTV.setVisibility(View.INVISIBLE);
-                //mSearchResultsRV.setVisibility(View.VISIBLE);
-                Log.d(TAG, s);
-                ArrayList<PeopleUtils.StarWarsPerson> items = PeopleUtils.parseStarWarsResults(s); // SET UP FOR PEOPLE
-                mPeopleAdapter.updatePeopleResults(items);
-            } else {
-                //mLoadingErrorTV.setVisibility(View.VISIBLE);
-                //mSearchResultsRV.setVisibility(View.INVISIBLE);
-            }
-            //mLoadingPB.setVisibility(View.INVISIBLE);
-        }
-
-    }
-
 
 }

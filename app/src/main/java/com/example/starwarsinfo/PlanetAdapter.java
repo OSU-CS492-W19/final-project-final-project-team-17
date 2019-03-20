@@ -27,7 +27,12 @@ public class PlanetAdapter  extends RecyclerView.Adapter<PlanetAdapter.StarWarsV
 
     @Override
     public int getItemCount(){
-        return mSWList.size();
+        if(mSWList != null){
+            return mSWList.size();
+        }
+        else{
+            return 0;
+        }
     }
 
     @NonNull

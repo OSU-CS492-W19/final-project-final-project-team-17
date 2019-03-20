@@ -27,7 +27,12 @@ public class PeopleAdapter  extends RecyclerView.Adapter<PeopleAdapter.StarWarsV
 
     @Override
     public int getItemCount(){
-        return mSWList.size();
+        if(mSWList == null){
+            return 0;
+        }
+        else{
+            return mSWList.size();
+        }
     }
 
     @NonNull
