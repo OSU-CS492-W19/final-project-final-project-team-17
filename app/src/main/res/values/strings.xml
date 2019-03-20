@@ -5,5 +5,7 @@
     <string name="species">Species</string>
     <string name="people">People</string>
     <string name="setting">Settings</string>
-
+    <string name="loading_error_message_people">"Woops. Can't connect to a galaxy far far away. No people in the galaxy! Check your internet connection."</string>
+    <string name="loading_error_message_planet">"Woops. Can't connect to a galaxy far far away. No planets in the galaxy! Check your internet connection."</string>
+    <string name="loading_error_message_species">"Woops. Can't connect to a galaxy far far away. No creatures in the galaxy! Check your internet connection."</string>
 </resources>
