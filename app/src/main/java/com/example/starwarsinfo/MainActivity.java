@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.starwarsinfo.People.PeopleActivity;
 import com.example.starwarsinfo.Planet.PlanetActivity;
+import com.example.starwarsinfo.Settings.SettingsActivity;
 import com.example.starwarsinfo.Species.SpeciesActivity;
 
 public class MainActivity extends AppCompatActivity
@@ -101,8 +102,8 @@ implements NavigationView.OnNavigationItemSelectedListener {
             case R.id.nav_home:
                 return true;
             case R.id.nav_settings:
-                //Intent settingsIntent = new Intent(this, SettingsActivity.class);
-                //startActivity(settingsIntent);
+                Intent settingsIntent = new Intent(this, SettingsActivity.class);
+                startActivity(settingsIntent);
                 return true;
             case R.id.nav_people:
                 Intent peopleActivityIntent = new Intent(this, PeopleActivity.class);
