@@ -81,8 +81,18 @@ public class PeopleAdapter  extends RecyclerView.Adapter<PeopleAdapter.StarWarsV
 
         public void bind(PeopleUtils.StarWarsPerson SWdetail) {
             nameTV.setText(SWdetail.name);
+
             String heightText = "Height: " + SWdetail.height;
+            if(SWdetail.height!= null &&!SWdetail.height.equals("unknown"))
+            {
+                heightText += " centimeters";
+            }
+
             String massText = "Mass: " + SWdetail.mass;
+            if(SWdetail.mass!= null && !SWdetail.mass.equals("unknown"))
+            {
+                massText += " kilograms";
+            }
             //String filmText = "Films: " + SWdetail.films;
            // String homeText = "Homeworld: " + SWdetail.homeworld;
             heightTV.setText(heightText);

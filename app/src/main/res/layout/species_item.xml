@@ -33,8 +33,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/species_language_tv"
+            android:id="@+id/species_height_tv"
             android:textSize="16sp"/>
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/species_language_tv"
+        android:textSize="16sp"/>
+        <!--<TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/species_homeworld_tv"
+            android:textSize="16sp"/> //TODO Homeworld if we are going to use it needs to be searched as well. Otherwise leave it out.-->
     </LinearLayout>
 
     <View

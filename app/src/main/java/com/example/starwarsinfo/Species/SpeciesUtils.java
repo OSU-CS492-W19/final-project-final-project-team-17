@@ -16,7 +16,12 @@ public class SpeciesUtils {
     public static class StarWarsSpecies {
         public String name;
         public String classification;
-        public String mass;
+        public String designation;
+        public String average_lifespan;
+       // public String homeworld;//TODO Homeworld if we are going to use it needs to be searched as well. Otherwise leave it out.
+        public String language;
+        public String average_height;
+
     }
     public static class StarWarsResults {
         public StarWarsSpecies[] results;

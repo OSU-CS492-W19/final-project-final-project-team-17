@@ -84,18 +84,32 @@ public class PlanetAdapter  extends RecyclerView.Adapter<PlanetAdapter.StarWarsV
         }
 
         public void bind(PlanetUtils.StarWarsPlanet SWdetail){
+            nameTV.setText(SWdetail.name);
+
             String gravityText = "Gravity: " + SWdetail.gravity;
             gravityTV.setText(gravityText);
+
             String terrainText = "Terrain: " + SWdetail.terrain;
             terrainTV.setText(terrainText);
-            nameTV.setText(SWdetail.name);
-            String diameterText = "Diameter: " + SWdetail.diameter;
+
+            String diameterText = "Diameter: ";
+            if(SWdetail.diameter != null && SWdetail.diameter.equals("0"))
+            {
+                diameterText = "Unknown";
+            }
+            else
+            {
+                diameterText += SWdetail.diameter + " kilometers";
+            }
             diameterTV.setText(diameterText);
+
             String populationText = "Population: " + SWdetail.population;
             populationTV.setText(populationText);
+
             String climateText = "Climate: " + SWdetail.climate;
             climateTV.setText(climateText);
-            String rotationText = "Rotation Period: " + SWdetail.rotation_period;
+
+            String rotationText = "Rotation Period: " + SWdetail.rotation_period + " hours";
             rotation_periodTV.setText(rotationText);
         }
         @Override

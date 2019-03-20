@@ -16,62 +16,62 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.starwarsinfo.People.PeopleAdapter;
-import com.example.starwarsinfo.People.PeopleUtils;
+import com.example.starwarsinfo.Species.SpeciesAdapter;
+import com.example.starwarsinfo.Species.SpeciesUtils;
 import com.example.starwarsinfo.R;
 import com.example.starwarsinfo.StarWarsLoader;
 
 import java.util.ArrayList;
 
-public class SpeciesActivity extends AppCompatActivity implements PeopleAdapter.OnPersonItemClickListener,
+public class SpeciesActivity extends AppCompatActivity implements SpeciesAdapter.OnSpeciesItemClickListener,
         LoaderManager.LoaderCallbacks<String>{
 
     private RecyclerView mSearchResultsRV;
-    private PeopleAdapter mPeopleAdapter;
+    private SpeciesAdapter mSpeciesAdapter;
     private ProgressBar mLoadingPB;
     private TextView mLoadingErrorMessageTV;
-    private static final String REPOS_ARRAY_KEY = "peopleRepos";
-    private static final String GET_URL_KEY = "PeopleGetUrl";
+    private static final String REPOS_ARRAY_KEY = "speciesRepos";
+    private static final String GET_URL_KEY = "SpeciesGetUrl";
     private static final int STARWARS_LOADER_ID = 0;
     private static SharedPreferences.OnSharedPreferenceChangeListener settingsListener;
-    private ArrayList<PeopleUtils.StarWarsPerson> mStarWarsPeople;
+    private ArrayList<SpeciesUtils.StarWarsSpecies> mStarWarsSpecies;
     private final String TAG = SpeciesActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_people);
+        setContentView(R.layout.activity_species);
         mLoadingPB = findViewById(R.id.pb_loading_indicator);
         mLoadingErrorMessageTV = findViewById(R.id.tv_loading_error_message);
         SharedPreferences prefs = android.support.v7.preference.PreferenceManager.getDefaultSharedPreferences(this);
 
         mSearchResultsRV = findViewById(R.id.rv_starwars_list);
 
-        mPeopleAdapter = new PeopleAdapter(this);
+        mSpeciesAdapter = new SpeciesAdapter(this);
 
-        mSearchResultsRV.setAdapter(mPeopleAdapter);
+        mSearchResultsRV.setAdapter(mSpeciesAdapter);
         mSearchResultsRV.setLayoutManager(new LinearLayoutManager(this));
         mSearchResultsRV.setHasFixedSize(true);
 
         if(savedInstanceState != null && savedInstanceState.containsKey(REPOS_ARRAY_KEY))
         {
-            mStarWarsPeople = (ArrayList<PeopleUtils.StarWarsPerson>) savedInstanceState.getSerializable((REPOS_ARRAY_KEY));
-            mPeopleAdapter.updatePeopleResults(mStarWarsPeople);
+            mStarWarsSpecies = (ArrayList<SpeciesUtils.StarWarsSpecies>) savedInstanceState.getSerializable((REPOS_ARRAY_KEY));
+            mSpeciesAdapter.updateSpeciesResults(mStarWarsSpecies);
         }
         getSupportLoaderManager().initLoader(STARWARS_LOADER_ID, savedInstanceState, this);
         settingsListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-                loadStarWarsPeople();
+                loadStarWarsSpecies();
             }
         };
         prefs.registerOnSharedPreferenceChangeListener(settingsListener);
-        loadStarWarsPeople();
+        loadStarWarsSpecies();
     }
 
-    private void loadStarWarsPeople()
+    private void loadStarWarsSpecies()
     {
-        String url = PeopleUtils.buildStarWarsSearchURL("https://swapi.co/api/");
-        Log.d(TAG, "querying starwars search URL: " + url );
+        String url = SpeciesUtils.buildStarWarsSearchURL("https://swapi.co/api/");
+        Log.d(TAG, "querying starwars search species URL: " + url );
        // new StarWarsSearchTask().execute(url);
         Bundle args = new Bundle();
         args.putString(GET_URL_KEY, url);
@@ -79,7 +79,7 @@ public class SpeciesActivity extends AppCompatActivity implements PeopleAdapter.
     }
 
     @Override
-    public void onPersonItemClick(PeopleUtils.StarWarsPerson swp) {
+    public void onSpeciesItemClick(SpeciesUtils.StarWarsSpecies swp) {
         Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
         intent.putExtra(SearchManager.QUERY, swp.name);
         startActivity(intent);
@@ -88,8 +88,8 @@ public class SpeciesActivity extends AppCompatActivity implements PeopleAdapter.
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if ( mStarWarsPeople!= null) {
-            outState.putSerializable(REPOS_ARRAY_KEY, mStarWarsPeople);
+        if ( mStarWarsSpecies!= null) {
+            outState.putSerializable(REPOS_ARRAY_KEY, mStarWarsSpecies);
         }
     }
 
@@ -109,8 +109,8 @@ public class SpeciesActivity extends AppCompatActivity implements PeopleAdapter.
         if (s != null) {
             mLoadingErrorMessageTV.setVisibility(View.INVISIBLE);
             mSearchResultsRV.setVisibility(View.VISIBLE);
-            ArrayList<PeopleUtils.StarWarsPerson> starWarsPeople = PeopleUtils.parseStarWarsResults(s);
-            mPeopleAdapter.updatePeopleResults(starWarsPeople);
+            ArrayList<SpeciesUtils.StarWarsSpecies> starWarsSpecies = SpeciesUtils.parseStarWarsResults(s);
+            mSpeciesAdapter.updateSpeciesResults(starWarsSpecies);
         } else {
             mSearchResultsRV.setVisibility(View.INVISIBLE);
             mLoadingErrorMessageTV.setVisibility(View.VISIBLE);
@@ -147,8 +147,8 @@ public class SpeciesActivity extends AppCompatActivity implements PeopleAdapter.
 //                //mLoadingErrorTV.setVisibility(View.INVISIBLE);
 //                //mSearchResultsRV.setVisibility(View.VISIBLE);
 //                Log.d(TAG, s);
-//                ArrayList<PeopleUtils.StarWarsPerson> items = PeopleUtils.parseStarWarsResults(s); // SET UP FOR PEOPLE
-//                mPeopleAdapter.updatePeopleResults(items);
+//                ArrayList<SpeciesUtils.StarWarsSpecies> items = SpeciesUtils.parseStarWarsResults(s); // SET UP FOR PEOPLE
+//                mSpeciesAdapter.updateSpeciesResults(items);
 //            } else {
 //                //mLoadingErrorTV.setVisibility(View.VISIBLE);
 //                //mSearchResultsRV.setVisibility(View.INVISIBLE);
