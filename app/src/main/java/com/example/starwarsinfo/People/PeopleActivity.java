@@ -69,7 +69,7 @@ public class PeopleActivity extends AppCompatActivity implements PeopleAdapter.O
     private void loadStarWarsPeople()
     {
         String url = PeopleUtils.buildStarWarsSearchURL("https://swapi.co/api/");
-        Log.d(TAG, "querying starwars search URL: " + url );
+        Log.d(TAG, "querying starwars people search URL: " + url );
        // new StarWarsSearchTask().execute(url);
         Bundle args = new Bundle();
         args.putString(GET_URL_KEY, url);
@@ -103,7 +103,7 @@ public class PeopleActivity extends AppCompatActivity implements PeopleAdapter.O
 
     @Override
     public void onLoadFinished(@NonNull Loader<String> loader, String s) {
-        Log.d(TAG, "Got results from the loader");
+        Log.d(TAG, "Got results from the loader for people");
         if (s != null) {
             mLoadingErrorMessageTV.setVisibility(View.INVISIBLE);
             mSearchResultsRV.setVisibility(View.VISIBLE);

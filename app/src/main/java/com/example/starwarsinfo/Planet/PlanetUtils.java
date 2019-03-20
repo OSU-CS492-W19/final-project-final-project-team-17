@@ -15,9 +15,12 @@ public class PlanetUtils {
 
     public static class StarWarsPlanet {
         public String name;
-        public String gravitiy;
-        public String mass;
+        public String rotation_period;
         public String population;
+        public String terrain;
+        public String climate;
+        public String gravity;
+        public String diameter;
     }
     public static class StarWarsResults {
         public StarWarsPlanet[] results;

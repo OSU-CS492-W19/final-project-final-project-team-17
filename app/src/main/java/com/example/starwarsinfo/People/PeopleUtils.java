@@ -17,6 +17,8 @@ public class PeopleUtils {
         public String name;
         public String height;
         public String mass;
+        //public String films;
+        //public String homeworld; //homeworld acts weird. So we should just drop it for now.
     }
     public static class StarWarsResults {
         public PeopleUtils.StarWarsPerson[] results;

@@ -66,12 +66,16 @@ public class PeopleAdapter  extends RecyclerView.Adapter<PeopleAdapter.StarWarsV
         private TextView nameTV;
         private TextView heightTV;
         private TextView massTV;
+       // private TextView filmsTV;
+       // private TextView homeworldTV;//homeworld acts weird. So we should just drop it for now.
 
         public StarWarsViewHolder(View itemView) {
             super(itemView);
             nameTV = itemView.findViewById(R.id.person_name_tv);
             heightTV = itemView.findViewById(R.id.person_height_tv);
             massTV = itemView.findViewById(R.id.person_mass_tv);
+            //filmsTV = itemView.findViewById(R.id.person_films_tv);
+            //homeworldTV = itemView.findViewById(R.id.person_homeworld_tv);
             itemView.setOnClickListener(this);
         }
 
@@ -79,8 +83,11 @@ public class PeopleAdapter  extends RecyclerView.Adapter<PeopleAdapter.StarWarsV
             nameTV.setText(SWdetail.name);
             String heightText = "Height: " + SWdetail.height;
             String massText = "Mass: " + SWdetail.mass;
+            //String filmText = "Films: " + SWdetail.films;
+           // String homeText = "Homeworld: " + SWdetail.homeworld;
             heightTV.setText(heightText);
             massTV.setText(massText);
+          //  homeworldTV.setText(homeText);
         }
 
         @Override

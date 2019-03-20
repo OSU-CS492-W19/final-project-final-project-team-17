@@ -12,14 +12,24 @@ import com.example.starwarsinfo.R;
 import java.util.List;
 
 public class PlanetAdapter  extends RecyclerView.Adapter<PlanetAdapter.StarWarsViewHolder>{
+
     private List<PlanetUtils.StarWarsPlanet> mSWList;
+    private OnPlanetItemClickListener mOnPlanetClickListener;
+
+    public interface OnPlanetItemClickListener{
+        void onPlanetItemClick(PlanetUtils.StarWarsPlanet swp);
+    }
 
     public void updatePlanetResults(List<PlanetUtils.StarWarsPlanet> items){
         mSWList = items; //arraylist and list not working out
         notifyDataSetChanged();
     }
+    public int adapterPositionToArrayIndex(int i){
+        return mSWList.size() - i - 1;
+    }
 
-    public PlanetAdapter(){
+    public PlanetAdapter(OnPlanetItemClickListener click){
+        mOnPlanetClickListener = click;
     }
 
     public void addSWList(PlanetUtils.StarWarsPlanet swPlanet) {
@@ -29,11 +39,11 @@ public class PlanetAdapter  extends RecyclerView.Adapter<PlanetAdapter.StarWarsV
 
     @Override
     public int getItemCount(){
-        if(mSWList != null){
-            return mSWList.size();
+        if(mSWList == null){
+            return 0;
         }
         else{
-            return 0;
+            return mSWList.size();
         }
     }
 
@@ -41,7 +51,7 @@ public class PlanetAdapter  extends RecyclerView.Adapter<PlanetAdapter.StarWarsV
     @Override
     public PlanetAdapter.StarWarsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View itemView = inflater.inflate(R.layout.starwars_list_item, viewGroup, false);
+        View itemView = inflater.inflate(R.layout.planet_item, viewGroup, false);
         return new PlanetAdapter.StarWarsViewHolder(itemView);
     }
 
@@ -51,19 +61,47 @@ public class PlanetAdapter  extends RecyclerView.Adapter<PlanetAdapter.StarWarsV
         starWarsViewHolder.bind(todo);
     }
 
-    class StarWarsViewHolder extends RecyclerView.ViewHolder {
-        private TextView mStarWarsTV;
+    class StarWarsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        private TextView gravityTV;
+        private TextView nameTV;
+        private TextView diameterTV;
+        private TextView climateTV;
+        private TextView rotation_periodTV;
+        private TextView terrainTV;
+        private TextView populationTV;
 
         public StarWarsViewHolder(View itemView) {
             super(itemView);
-            mStarWarsTV = itemView.findViewById(R.id.tv_starwars_text); // -------------------- HELP
+            gravityTV = itemView.findViewById(R.id.planet_gravity_tv);
+            nameTV = itemView.findViewById(R.id.planet_name_tv);
+            diameterTV = itemView.findViewById(R.id.planet_diameter_tv);
+            climateTV = itemView.findViewById(R.id.planet_climate_tv);
+            rotation_periodTV = itemView.findViewById(R.id.planet_rotation_tv);
+            terrainTV = itemView.findViewById(R.id.planet_terrain_tv);
+            populationTV = itemView.findViewById(R.id.planet_population_tv);
+            itemView.setOnClickListener(this);
+
         }
 
         public void bind(PlanetUtils.StarWarsPlanet SWdetail){
-            mStarWarsTV.setText(SWdetail.name);
-            mStarWarsTV.setText(SWdetail.gravitiy);
-            mStarWarsTV.setText(SWdetail.mass);
-            mStarWarsTV.setText(SWdetail.population);
+            String gravityText = "Gravity: " + SWdetail.gravity;
+            gravityTV.setText(gravityText);
+            String terrainText = "Terrain: " + SWdetail.terrain;
+            terrainTV.setText(terrainText);
+            nameTV.setText(SWdetail.name);
+            String diameterText = "Diameter: " + SWdetail.diameter;
+            diameterTV.setText(diameterText);
+            String populationText = "Population: " + SWdetail.population;
+            populationTV.setText(populationText);
+            String climateText = "Climate: " + SWdetail.climate;
+            climateTV.setText(climateText);
+            String rotationText = "Rotation Period: " + SWdetail.rotation_period;
+            rotation_periodTV.setText(rotationText);
+        }
+        @Override
+        public void onClick(View v) {
+            PlanetUtils.StarWarsPlanet swp = mSWList.get(adapterPositionToArrayIndex(getAdapterPosition()));
+            mOnPlanetClickListener.onPlanetItemClick(swp);
         }
 
     }
