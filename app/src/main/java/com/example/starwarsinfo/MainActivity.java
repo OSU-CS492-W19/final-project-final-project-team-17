@@ -110,8 +110,8 @@ implements NavigationView.OnNavigationItemSelectedListener {
                 //startActivity(settingsIntent);
                 return true;
             case R.id.nav_people:
-                //Intent savedReposIntent = new Intent(this, SavedReposActivity.class);
-                //startActivity(savedReposIntent);
+                Intent peopleActivityIntent = new Intent(this, PeopleActivity.class);
+                startActivity(peopleActivityIntent);
                 return true;
             case R.id.nav_planets:
                 //Intent savedReposIntent = new Intent(this, SavedReposActivity.class);
