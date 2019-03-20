@@ -1,4 +1,4 @@
-package com.example.starwarsinfo;
+package com.example.starwarsinfo.Species;
 
 import android.net.Uri;
 

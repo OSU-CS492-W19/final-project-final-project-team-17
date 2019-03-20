@@ -1,20 +1,13 @@
 package com.example.starwarsinfo;
 
 import android.content.Intent;
-import android.nfc.Tag;
-import android.os.AsyncTask;
-import android.provider.Contacts;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,9 +15,9 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import com.example.starwarsinfo.People.PeopleActivity;
+import com.example.starwarsinfo.Planet.PlanetActivity;
+import com.example.starwarsinfo.Species.SpeciesActivity;
 
 public class MainActivity extends AppCompatActivity
 implements NavigationView.OnNavigationItemSelectedListener {
@@ -75,7 +68,8 @@ implements NavigationView.OnNavigationItemSelectedListener {
         planetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent planetIntent = new Intent(getApplicationContext(), PlanetActivity.class);
+                startActivity(planetIntent);
             }
         });
 
@@ -83,7 +77,8 @@ implements NavigationView.OnNavigationItemSelectedListener {
         speciesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent speciesIntent = new Intent(getApplicationContext(), SpeciesActivity.class);
+                startActivity(speciesIntent);
             }
         });
     }
@@ -114,12 +109,12 @@ implements NavigationView.OnNavigationItemSelectedListener {
                 startActivity(peopleActivityIntent);
                 return true;
             case R.id.nav_planets:
-                //Intent savedReposIntent = new Intent(this, SavedReposActivity.class);
-                //startActivity(savedReposIntent);
+                Intent planetActivityIntent = new Intent(this, PlanetActivity.class);
+                startActivity(planetActivityIntent);
                 return true;
             case R.id.nav_species:
-                //Intent savedReposIntent = new Intent(this, SavedReposActivity.class);
-                //startActivity(savedReposIntent);
+                Intent speciesActivityIntent = new Intent(this, SpeciesActivity.class);
+                startActivity(speciesActivityIntent);
                 return true;
             default:
                 return false;

@@ -15,7 +15,7 @@ public class StarWarsLoader extends AsyncTaskLoader<String>{
     private String mStarWarsJSON;
     private String mURL;
 
-    StarWarsLoader(Context context, String url)
+    public StarWarsLoader(Context context, String url)
     {
         super(context);
         mURL = url;

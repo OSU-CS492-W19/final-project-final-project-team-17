@@ -1,4 +1,4 @@
-package com.example.starwarsinfo;
+package com.example.starwarsinfo.Planet;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -7,40 +7,47 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.starwarsinfo.R;
+
 import java.util.List;
 
-public class SpeciesAdapter  extends RecyclerView.Adapter<SpeciesAdapter.StarWarsViewHolder>{
-    private List<SpeciesUtils.StarWarsSpecies> mSWList;
+public class PlanetAdapter  extends RecyclerView.Adapter<PlanetAdapter.StarWarsViewHolder>{
+    private List<PlanetUtils.StarWarsPlanet> mSWList;
 
-    public void updateSpeciesResults(List<SpeciesUtils.StarWarsSpecies> items){
+    public void updatePlanetResults(List<PlanetUtils.StarWarsPlanet> items){
         mSWList = items; //arraylist and list not working out
         notifyDataSetChanged();
     }
 
-    public SpeciesAdapter(){
+    public PlanetAdapter(){
     }
 
-    public void addSWList(SpeciesUtils.StarWarsSpecies swSpecies) {
-        mSWList.add(swSpecies);
+    public void addSWList(PlanetUtils.StarWarsPlanet swPlanet) {
+        mSWList.add(swPlanet);
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount(){
-        return mSWList.size();
+        if(mSWList != null){
+            return mSWList.size();
+        }
+        else{
+            return 0;
+        }
     }
 
     @NonNull
     @Override
-    public SpeciesAdapter.StarWarsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public PlanetAdapter.StarWarsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View itemView = inflater.inflate(R.layout.starwars_list_item, viewGroup, false);
-        return new SpeciesAdapter.StarWarsViewHolder(itemView);
+        return new PlanetAdapter.StarWarsViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SpeciesAdapter.StarWarsViewHolder starWarsViewHolder, int i) {
-        SpeciesUtils.StarWarsSpecies todo = mSWList.get(mSWList.size() - i - 1);
+    public void onBindViewHolder(@NonNull PlanetAdapter.StarWarsViewHolder starWarsViewHolder, int i) {
+        PlanetUtils.StarWarsPlanet todo = mSWList.get(mSWList.size() - i - 1);
         starWarsViewHolder.bind(todo);
     }
 
@@ -52,11 +59,12 @@ public class SpeciesAdapter  extends RecyclerView.Adapter<SpeciesAdapter.StarWar
             mStarWarsTV = itemView.findViewById(R.id.tv_starwars_text); // -------------------- HELP
         }
 
-        public void bind(SpeciesUtils.StarWarsSpecies SWdetail){
+        public void bind(PlanetUtils.StarWarsPlanet SWdetail){
             mStarWarsTV.setText(SWdetail.name);
-            mStarWarsTV.setText(SWdetail.classification);
+            mStarWarsTV.setText(SWdetail.gravitiy);
             mStarWarsTV.setText(SWdetail.mass);
+            mStarWarsTV.setText(SWdetail.population);
         }
+
     }
 }
-

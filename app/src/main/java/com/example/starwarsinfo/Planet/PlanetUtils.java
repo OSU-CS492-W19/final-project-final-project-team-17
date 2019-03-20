@@ -1,4 +1,4 @@
-package com.example.starwarsinfo;
+package com.example.starwarsinfo.Planet;
 
 import android.net.Uri;
 
@@ -6,38 +6,39 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-public class PeopleUtils {
+public class PlanetUtils {
     final static String STARWARS_SEARCH_BASE_URL = "https://swapi.co/api/";
     final static String STARWARS_SEARCH_QUERY_PARAM = "q";
-    final static String STARWARS_SEARCH_TYPE_PARAM = "people";
-    final static String STARWARS_SEARCH_PAGE_NUMBER = "1";
-    final static String STARWARS_SEARCH_PAGE = "page";
+    final static String STARWARS_SEARCH_TYPE_PARAM = "planets";
+    final static String STARWARS_SEARCH_NUMBER_PARAM = "1";
+    final static String STARWARS_SEARCH_STUFF = "search";
 
-    public static class StarWarsPerson {
+    public static class StarWarsPlanet {
         public String name;
-        public String height;
+        public String gravitiy;
         public String mass;
+        public String population;
     }
     public static class StarWarsResults {
-        public PeopleUtils.StarWarsPerson[] results;
+        public StarWarsPlanet[] results;
 
     }
 
     public static String buildStarWarsSearchURL(String query){
         return Uri.parse(STARWARS_SEARCH_BASE_URL).buildUpon()
                 .appendPath(STARWARS_SEARCH_TYPE_PARAM)
-                .appendQueryParameter(STARWARS_SEARCH_PAGE, STARWARS_SEARCH_PAGE_NUMBER)
+                .appendQueryParameter(STARWARS_SEARCH_STUFF, "a")
                 .build()
                 .toString();
 
     }
 
-    public static ArrayList<PeopleUtils.StarWarsPerson> parseStarWarsResults(String json) {
+    public static ArrayList<StarWarsPlanet> parseStarWarsResults(String json) {
         Gson gson = new Gson();
-        PeopleUtils.StarWarsResults results = gson.fromJson(json, PeopleUtils.StarWarsResults.class);
+        StarWarsResults results = gson.fromJson(json, StarWarsResults.class);
         if (results != null && results.results != null) {
-            ArrayList<PeopleUtils.StarWarsPerson> newList = new ArrayList<>();
-            for (PeopleUtils.StarWarsPerson swp: results.results) {
+            ArrayList<StarWarsPlanet> newList = new ArrayList<>();
+            for (StarWarsPlanet swp: results.results) {
                 newList.add(swp);
             }
             return newList;
