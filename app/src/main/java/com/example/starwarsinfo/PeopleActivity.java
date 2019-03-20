@@ -1,20 +1,27 @@
 package com.example.starwarsinfo;
 
+import android.app.SearchManager;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
-public class PeopleActivity extends AppCompatActivity {
+public class PeopleActivity extends AppCompatActivity implements PeopleAdapter.OnPersonItemClickListener {
 
     private RecyclerView mSearchResultsRV;
     private PeopleAdapter mPeopleAdapter;
+    private ProgressBar mLoadingPB;
+
 
     private final String TAG = PeopleActivity.class.getSimpleName();
 
@@ -22,9 +29,11 @@ public class PeopleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_people);
+        mLoadingPB = findViewById(R.id.pb_loading_indicator);
 
         mSearchResultsRV = findViewById(R.id.rv_starwars_list);
-        mPeopleAdapter = new PeopleAdapter();
+
+        mPeopleAdapter = new PeopleAdapter(this);
 
         mSearchResultsRV.setAdapter(mPeopleAdapter);
         mSearchResultsRV.setLayoutManager(new LinearLayoutManager(this));
@@ -38,11 +47,18 @@ public class PeopleActivity extends AppCompatActivity {
         new StarWarsSearchTask().execute(url);
     }
 
+    @Override
+    public void onPersonItemClick(PeopleUtils.StarWarsPerson swp) {
+        Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
+        intent.putExtra(SearchManager.QUERY, swp.name);
+        startActivity(intent);
+    }
+
     class StarWarsSearchTask extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            //mLoadingPB.setVisibility(View.VISIBLE);
+            mLoadingPB.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -69,8 +85,7 @@ public class PeopleActivity extends AppCompatActivity {
                 //mLoadingErrorTV.setVisibility(View.VISIBLE);
                 //mSearchResultsRV.setVisibility(View.INVISIBLE);
             }
-            //mLoadingPB.setVisibility(View.INVISIBLE);
+            mLoadingPB.setVisibility(View.INVISIBLE);
         }
-
     }
 }

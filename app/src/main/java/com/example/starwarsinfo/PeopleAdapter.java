@@ -7,17 +7,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 public class PeopleAdapter  extends RecyclerView.Adapter<PeopleAdapter.StarWarsViewHolder>{
+
     private List<PeopleUtils.StarWarsPerson> mSWList;
+    private OnPersonItemClickListener mOnPersonClickListener;
+
+    public interface OnPersonItemClickListener{
+        void onPersonItemClick(PeopleUtils.StarWarsPerson swp);
+    }
 
     public void updatePeopleResults(List<PeopleUtils.StarWarsPerson> items){
         mSWList = items; //arraylist and list not working out
         notifyDataSetChanged();
     }
+    public int adapterPositionToArrayIndex(int i){
+        return mSWList.size() - i - 1;
+    }
 
-    public PeopleAdapter(){
+
+    public PeopleAdapter(OnPersonItemClickListener click){
+        mOnPersonClickListener = click;
     }
 
     public void addSWList(PeopleUtils.StarWarsPerson swPerson) {
@@ -39,7 +52,7 @@ public class PeopleAdapter  extends RecyclerView.Adapter<PeopleAdapter.StarWarsV
     @Override
     public PeopleAdapter.StarWarsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View itemView = inflater.inflate(R.layout.starwars_list_item, viewGroup, false);
+        View itemView = inflater.inflate(R.layout.person_item, viewGroup, false);
         return new PeopleAdapter.StarWarsViewHolder(itemView);
     }
 
@@ -49,18 +62,31 @@ public class PeopleAdapter  extends RecyclerView.Adapter<PeopleAdapter.StarWarsV
         starWarsViewHolder.bind(todo);
     }
 
-    class StarWarsViewHolder extends RecyclerView.ViewHolder {
-        private TextView mStarWarsTV;
+    class StarWarsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private TextView nameTV;
+        private TextView heightTV;
+        private TextView massTV;
 
         public StarWarsViewHolder(View itemView) {
             super(itemView);
-            mStarWarsTV = itemView.findViewById(R.id.tv_starwars_text); // -------------------- HELP
+            nameTV = itemView.findViewById(R.id.person_name_tv);
+            heightTV = itemView.findViewById(R.id.person_height_tv);
+            massTV = itemView.findViewById(R.id.person_mass_tv);
+            itemView.setOnClickListener(this);
         }
 
         public void bind(PeopleUtils.StarWarsPerson SWdetail) {
-            mStarWarsTV.setText(SWdetail.name);
-            mStarWarsTV.setText(SWdetail.height);
-            mStarWarsTV.setText(SWdetail.mass);
+            nameTV.setText(SWdetail.name);
+            String heightText = "Height: " + SWdetail.height;
+            String massText = "Mass: " + SWdetail.mass;
+            heightTV.setText(heightText);
+            massTV.setText(massText);
+        }
+
+        @Override
+        public void onClick(View v) {
+            PeopleUtils.StarWarsPerson swp = mSWList.get(adapterPositionToArrayIndex(getAdapterPosition()));
+            mOnPersonClickListener.onPersonItemClick(swp);
         }
 
         /* CANNOT HAVE MULTIPLE BINDS

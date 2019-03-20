@@ -6,9 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".PeopleActivity">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_starwars_list"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_starwars_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ProgressBar
+            android:id="@+id/pb_loading_indicator"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_margin="32dp"
+            android:layout_gravity="center_horizontal"
+            android:visibility="invisible"/>
+
+    </FrameLayout>
+
 
 </android.support.constraint.ConstraintLayout>
