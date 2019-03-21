@@ -8,22 +8,40 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import com.example.starwarsinfo.People.PeopleActivity;
+import com.example.starwarsinfo.Planet.PlanetActivity;
+import com.example.starwarsinfo.Species.SpeciesActivity;
 
 public class MainActivity extends AppCompatActivity
 implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawerLayout;
+    private String mRelocationURLTextString;
+    private ProgressBar mLoadingPB;
+    private TextView mLoadingErrorTV;
+
+    private final String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mDrawerLayout = findViewById(R.id.drawer_layout);
+        //mSearchResultsRV = findViewById(R.id.rv_starwars_list);
+
+        //mPeopleAdapter = new PeopleAdapter();
+
+        //mSearchResultsRV.setAdapter(mPeopleAdapter);
+        //mSearchResultsRV.setLayoutManager(new LinearLayoutManager(this));
+        //mSearchResultsRV.setHasFixedSize(true);
 
         NavigationView navigationView = findViewById(R.id.nv_nav_drawer);
         navigationView.setNavigationItemSelectedListener(this);
@@ -33,7 +51,7 @@ implements NavigationView.OnNavigationItemSelectedListener {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.hamburger);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_action_hamburger_stack);
 
         getSupportActionBar().setElevation(0);
 
@@ -41,7 +59,8 @@ implements NavigationView.OnNavigationItemSelectedListener {
         peopleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent peopleIntent = new Intent(getApplicationContext(), PeopleActivity.class);
+                startActivity(peopleIntent);
             }
         });
 
@@ -49,7 +68,8 @@ implements NavigationView.OnNavigationItemSelectedListener {
         planetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent planetIntent = new Intent(getApplicationContext(), PlanetActivity.class);
+                startActivity(planetIntent);
             }
         });
 
@@ -57,7 +77,8 @@ implements NavigationView.OnNavigationItemSelectedListener {
         speciesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent speciesIntent = new Intent(getApplicationContext(), SpeciesActivity.class);
+                startActivity(speciesIntent);
             }
         });
     }
@@ -84,19 +105,20 @@ implements NavigationView.OnNavigationItemSelectedListener {
                 //startActivity(settingsIntent);
                 return true;
             case R.id.nav_people:
-                //Intent savedReposIntent = new Intent(this, SavedReposActivity.class);
-                //startActivity(savedReposIntent);
+                Intent peopleActivityIntent = new Intent(this, PeopleActivity.class);
+                startActivity(peopleActivityIntent);
                 return true;
             case R.id.nav_planets:
-                //Intent savedReposIntent = new Intent(this, SavedReposActivity.class);
-                //startActivity(savedReposIntent);
+                Intent planetActivityIntent = new Intent(this, PlanetActivity.class);
+                startActivity(planetActivityIntent);
                 return true;
             case R.id.nav_species:
-                //Intent savedReposIntent = new Intent(this, SavedReposActivity.class);
-                //startActivity(savedReposIntent);
+                Intent speciesActivityIntent = new Intent(this, SpeciesActivity.class);
+                startActivity(speciesActivityIntent);
                 return true;
             default:
                 return false;
         }
     }
+
 }
