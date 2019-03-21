@@ -1,7 +1,12 @@
 package com.example.starwarsinfo.People;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.preference.EditTextPreference;
+import android.view.ContextThemeWrapper;
 
+import com.example.starwarsinfo.Settings.SettingsActivity;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -25,10 +30,10 @@ public class PeopleUtils {
 
     }
 
-    public static String buildStarWarsSearchURL(String query){
+    public static String buildStarWarsSearchURL(String query, String pageNumber){
         return Uri.parse(STARWARS_SEARCH_BASE_URL).buildUpon()
                 .appendPath(STARWARS_SEARCH_TYPE_PARAM)
-                .appendQueryParameter(STARWARS_SEARCH_PAGE, STARWARS_SEARCH_PAGE_NUMBER)
+                .appendQueryParameter(STARWARS_SEARCH_PAGE, pageNumber)
                 .build()
                 .toString();
 

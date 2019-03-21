@@ -3,6 +3,7 @@ package com.example.starwarsinfo.People;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
@@ -68,7 +69,9 @@ public class PeopleActivity extends AppCompatActivity implements PeopleAdapter.O
 
     private void loadStarWarsPeople()
     {
-        String url = PeopleUtils.buildStarWarsSearchURL("https://swapi.co/api/");
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        String pageNumber = settings.getString("settings_page_number", "1");
+        String url = PeopleUtils.buildStarWarsSearchURL("https://swapi.co/api/", pageNumber);
         Log.d(TAG, "querying starwars people search URL: " + url );
        // new StarWarsSearchTask().execute(url);
         Bundle args = new Bundle();
