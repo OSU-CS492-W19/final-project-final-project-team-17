@@ -13,6 +13,16 @@
         android:singleLine="true"
         android:title="@string/pref_title_display_name" />
 
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="1"
+        android:inputType="textCapWords"
+        android:key="settings_page_number"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="People Data Set (Pick number from 1 - 3)" />
+
     <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
          dismiss it. -->
     <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
